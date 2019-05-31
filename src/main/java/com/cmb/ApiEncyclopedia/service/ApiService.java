@@ -36,7 +36,12 @@ public class ApiService {
      * 插入接口
      */
     public void insertService() {
-        apiDao.insertApi("get","获取数据","JDN","网上银行２室","老妖");
+
+        // TODO: 19-5-31 构造数据
+        for (int i=0;i<100;i++){
+            apiDao.insertApi("get","获取数据","JDN","网上银行２室","老妖");
+        }
+
     }
 
     /**

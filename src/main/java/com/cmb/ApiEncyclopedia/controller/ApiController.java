@@ -23,9 +23,11 @@ public class ApiController {
     @Autowired
     private ApiService apiService;
 
+
+    //带分页查询
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
-    public RestResponse queryAll( @RequestParam(value = "pageNum", required = false, defaultValue="1") Integer pageNum,
-                                    @RequestParam(value = "pageSize", required = false, defaultValue="10") Integer pageSize) {
+    public RestResponse queryAll( @RequestParam(value = "pageNum", required = false, defaultValue="2") Integer pageNum,
+                                    @RequestParam(value = "pageSize", required = false, defaultValue="5") Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         List<ApiDTO> apiDTOS = apiService.selectAllUser();
@@ -48,7 +50,7 @@ public class ApiController {
 
     @RequestMapping("/delete")
     public String testDelete() {
-        apiService.deleteService(3);
+        apiService.deleteService(1);
         return "OK";
     }
 
