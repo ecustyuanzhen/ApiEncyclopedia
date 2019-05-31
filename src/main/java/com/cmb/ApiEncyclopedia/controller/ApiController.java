@@ -1,9 +1,14 @@
 package com.cmb.ApiEncyclopedia.controller;
 
 import com.cmb.ApiEncyclopedia.bean.ApiDTO;
+import com.cmb.ApiEncyclopedia.rest.RestResponse;
 import com.cmb.ApiEncyclopedia.service.ApiService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,6 +22,18 @@ import java.util.List;
 public class ApiController {
     @Autowired
     private ApiService apiService;
+
+    @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
+    public RestResponse queryAll( @RequestParam(value = "pageNum", required = false, defaultValue="1") Integer pageNum,
+                                    @RequestParam(value = "pageSize", required = false, defaultValue="10") Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<ApiDTO> apiDTOS = apiService.selectAllUser();
+
+        RestResponse<ApiDTO> response = new RestResponse(apiDTOS);
+        response.setTotal(apiDTOS.size());
+        return response;
+    }
 
     @RequestMapping("/query")
     public ApiDTO testQuery() {
